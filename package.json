@@ -19,14 +19,14 @@
     "rc-slider": "^11.1.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-multi-carousel": "^2.8.6",
+    "react-multi-carousel": "^2.8.5",
     "react-router-dom": "^7.13.0",
     "react-select": "^5.10.2",
     "tailwindcss": "^4.1.18",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
-    "@7nohe/openapi-react-query-codegen": "^2.0.0",
+    "@7nohe/openapi-react-query-codegen": "^0.5.3",
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
