@@ -1,99 +1,97 @@
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import {
-    getAllProducts,
-    getProductById,
-    getAllCategories,
-    getProductsByCategory,
-    type Product,
-    type GetAllProductsOptions,
-} from './client';
+/**
+ * API Hooks
+ * 
+ * Bu dosya OpenAPI codegen'den generate edilen hooks için
+ * temiz, okunabilir wrapper'lar sağlar.
+ * 
+ * Generated dosyaları düzenleme - bunun yerine:
+ *   npm run codegen
+ * 
+ * @see openapi.json - API şeması
+ * @see src/api/generated - Auto-generated code (dokunma!)
+ */
 
-// Query Keys Factory - for cache management
-export const productKeys = {
-    all: ['products'] as const,
-    lists: () => [...productKeys.all, 'list'] as const,
-    list: (filters?: GetAllProductsOptions) =>
-        [...productKeys.lists(), filters] as const,
-    details: () => [...productKeys.all, 'detail'] as const,
-    detail: (id: number) => [...productKeys.details(), id] as const,
-    categories: () => [...productKeys.all, 'categories'] as const,
-    byCategory: (category: string) =>
-        [...productKeys.all, 'category', category] as const,
+import { useQuery } from '@tanstack/react-query';
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { ProductsService } from './generated/requests/services/ProductsService';
+import type { Product } from './generated/requests/models/Product';
+
+// Re-export Product type
+export type { Product };
+
+// ============ Query Keys ============
+
+export const queryKeys = {
+    products: {
+        all: ['products'] as const,
+        list: (options?: { limit?: number; sort?: 'asc' | 'desc' }) =>
+            [...queryKeys.products.all, 'list', options] as const,
+        detail: (id: number) => [...queryKeys.products.all, 'detail', id] as const,
+        byCategory: (category: string) => [...queryKeys.products.all, 'category', category] as const,
+    },
+    categories: ['categories'] as const,
 };
 
-// ============ Products Hooks ============
+// ============ Hooks ============
+
+export interface GetAllProductsOptions {
+    limit?: number;
+    sort?: 'asc' | 'desc';
+}
 
 /**
- * Hook to fetch all products
+ * Tüm ürünleri getir
  */
 export function useGetAllProducts(
     options?: GetAllProductsOptions,
-    queryOptions?: Omit<
-        UseQueryOptions<Product[], Error>,
-        'queryKey' | 'queryFn'
-    >
-) {
+    queryOptions?: Omit<UseQueryOptions<Product[], Error>, 'queryKey' | 'queryFn'>
+): UseQueryResult<Product[], Error> {
     return useQuery({
-        queryKey: productKeys.list(options),
-        queryFn: () => getAllProducts(options),
+        queryKey: queryKeys.products.list(options),
+        queryFn: () => ProductsService.getAllProducts(options?.limit, options?.sort),
         ...queryOptions,
     });
 }
 
 /**
- * Hook to fetch a single product by ID
+ * ID ile tek ürün getir
  */
 export function useGetProductById(
     id: number,
-    queryOptions?: Omit<
-        UseQueryOptions<Product, Error>,
-        'queryKey' | 'queryFn'
-    >
-) {
+    queryOptions?: Omit<UseQueryOptions<Product, Error>, 'queryKey' | 'queryFn'>
+): UseQueryResult<Product, Error> {
     return useQuery({
-        queryKey: productKeys.detail(id),
-        queryFn: () => getProductById(id),
+        queryKey: queryKeys.products.detail(id),
+        queryFn: () => ProductsService.getProductById(id),
         enabled: !!id,
         ...queryOptions,
     });
 }
 
-// ============ Categories Hooks ============
-
 /**
- * Hook to fetch all categories
+ * Tüm kategorileri getir
  */
 export function useGetAllCategories(
-    queryOptions?: Omit<
-        UseQueryOptions<string[], Error>,
-        'queryKey' | 'queryFn'
-    >
-) {
+    queryOptions?: Omit<UseQueryOptions<string[], Error>, 'queryKey' | 'queryFn'>
+): UseQueryResult<string[], Error> {
     return useQuery({
-        queryKey: productKeys.categories(),
-        queryFn: () => getAllCategories(),
+        queryKey: queryKeys.categories,
+        queryFn: () => ProductsService.getAllCategories(),
         ...queryOptions,
     });
 }
 
 /**
- * Hook to fetch products by category
+ * Kategoriye göre ürünleri getir
  */
 export function useGetProductsByCategory(
     category: string,
-    queryOptions?: Omit<
-        UseQueryOptions<Product[], Error>,
-        'queryKey' | 'queryFn'
-    >
-) {
+    queryOptions?: Omit<UseQueryOptions<Product[], Error>, 'queryKey' | 'queryFn'>
+): UseQueryResult<Product[], Error> {
     return useQuery({
-        queryKey: productKeys.byCategory(category),
-        queryFn: () => getProductsByCategory(category),
+        queryKey: queryKeys.products.byCategory(category),
+        queryFn: () => ProductsService.getProductsByCategory(category),
         enabled: !!category,
         ...queryOptions,
     });
 }
-
-// Re-export types and functions
-export type { Product, GetAllProductsOptions };
-export { getAllProducts, getProductById, getAllCategories, getProductsByCategory };
