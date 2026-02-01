@@ -20,14 +20,20 @@ export function ProductSection({
   });
 
   const allQuery = useGetAllProducts(
-    { limit },
+    {
+      // If we are sorting, we fetch all to ensure we get the correct top items
+      // because fakestoreapi applies limit BEFORE sort.
+      limit: undefined,
+      sort: "desc", // Default to desc for now if "New Arrivals", or we can make it a prop
+    },
     { staleTime: 5 * 60 * 1000, enabled: !category },
   );
 
   const isLoading = category ? categoryQuery.isLoading : allQuery.isLoading;
-  const products = category
-    ? categoryQuery.data?.slice(0, limit)
-    : allQuery.data;
+  const sourceData = category ? categoryQuery.data : allQuery.data;
+
+  // Slice locally to ensure we respect limit after potential sorting
+  const products = sourceData?.slice(0, limit);
 
   const content = (
     <>

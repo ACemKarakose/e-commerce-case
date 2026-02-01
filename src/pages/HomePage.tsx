@@ -16,12 +16,17 @@ export function HomePage() {
       </div>
 
       {/* Product Sections */}
-      <ProductSection title="NEW ARRIVALS" limit={4} useBreakout />
+      <ProductSection
+        title="NEW ARRIVALS"
+        category="men's clothing"
+        limit={4}
+        useBreakout
+      />
 
       {/* Wider Sections Container (Handled internally by components via useBreakout) */}
       <ProductSection
         title="TOP SELLING"
-        category="men's clothing"
+        category="women's clothing"
         limit={4}
         useBreakout
       />

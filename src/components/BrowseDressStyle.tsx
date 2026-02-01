@@ -39,7 +39,7 @@ export function BrowseDressStyle({
           <img
             src={DRESS_STYLES[0].image}
             alt={DRESS_STYLES[0].name}
-            className="absolute right-0 bottom-0 h-full w-auto object-cover object-bottom-right group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
         <Link
@@ -52,7 +52,7 @@ export function BrowseDressStyle({
           <img
             src={DRESS_STYLES[1].image}
             alt={DRESS_STYLES[1].name}
-            className="absolute right-0 bottom-0 h-full w-auto object-cover object-bottom-right group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
 
@@ -67,7 +67,7 @@ export function BrowseDressStyle({
           <img
             src={DRESS_STYLES[2].image}
             alt={DRESS_STYLES[2].name}
-            className="absolute right-0 bottom-0 h-full w-auto object-cover object-bottom-right group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
         <Link
@@ -80,7 +80,7 @@ export function BrowseDressStyle({
           <img
             src={DRESS_STYLES[3].image}
             alt={DRESS_STYLES[3].name}
-            className="absolute right-0 bottom-0 h-full w-auto object-cover object-bottom-right group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
       </div>
@@ -99,7 +99,7 @@ export function BrowseDressStyle({
             <img
               src={style.image}
               alt={style.name}
-              className="absolute right-0 bottom-0 h-full w-auto object-cover object-bottom-right group-hover:scale-105 transition-transform duration-300"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </Link>
         ))}
