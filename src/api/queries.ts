@@ -1,16 +1,3 @@
-/**
- * API Hooks
- * 
- * Bu dosya OpenAPI codegen'den generate edilen hooks için
- * temiz, okunabilir wrapper'lar sağlar.
- * 
- * Generated dosyaları düzenleme - bunun yerine:
- *   npm run codegen
- * 
- * @see openapi.json - API şeması
- * @see src/api/generated - Auto-generated code (dokunma!)
- */
-
 import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { ProductsService } from './generated/requests/services/ProductsService';

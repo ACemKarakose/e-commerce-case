@@ -25,6 +25,35 @@ src/
 - **Tailwind CSS** - Styling
 - **React Router v7** - Routing
 
+## Mimari ve Tasarım Kararları
+
+### Design Patterns
+
+| Pattern                             | Kullanım Yeri                 | Açıklama                                         |
+| ----------------------------------- | ----------------------------- | ------------------------------------------------ |
+| **Flux / Unidirectional Data Flow** | `cartStore.ts`                | Zustand ile tek yönlü veri akışı                 |
+| **Middleware Composition**          | `cartStore.ts`                | `immer` + `persist` + `devtools` zinciri         |
+| **Composite Key**                   | `cartStore.ts`                | `productId-size-color` formatında varyant ID'si  |
+| **Selector Pattern**                | `cartStore.ts`                | `selectCartItemCount` gibi memoized selector'lar |
+| **Query Key Factory**               | `queries.ts`                  | Hierarchical query key yapısı                    |
+| **Contract-First API**              | `openapi.json` → `generated/` | OpenAPI şemasından otomatik client üretimi       |
+
+### State Yönetimi Stratejisi
+
+```
+┌─────────────────┐     ┌─────────────────┐
+│  Server State   │     │  Client State   │
+│  (TanStack Q.)  │     │   (Zustand)     │
+├─────────────────┤     ├─────────────────┤
+│ • Products      │     │ • Cart          │
+│ • Categories    │     │ • Filters       │
+│ • Reviews       │     │ • UI State      │
+└─────────────────┘     └─────────────────┘
+```
+
+- **Server State**: TanStack Query ile yönetilir (cache, refetch, stale time)
+- **Client State**: Zustand ile yönetilir (persist to localStorage)
+
 ## Özellikler
 
 ### Ürün Listeleme
