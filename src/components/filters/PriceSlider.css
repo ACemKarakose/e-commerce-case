@@ -1,0 +1,4 @@
+/* CSS for PriceSlider if needed, mostly handled by inline styles in component or default rc-slider */
+.rc-slider-handle:active {
+  box-shadow: 0 0 5px black !important;
+}
